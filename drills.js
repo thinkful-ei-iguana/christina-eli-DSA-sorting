@@ -4,9 +4,8 @@ let callCount = {
   sixteen: null,
   firstTwo: null,
   seventh: null,
-  secondPartition: null,
-  startCount: null,
-  listResult: null
+  pivotAtStart: null,
+  pivotAtEnd: null
 };
 
 // const mergeSort = arr => {
@@ -55,14 +54,10 @@ let callCount = {
 // mergeSort(mergeList);
 // console.log(callCount);
 
-
-
 //Quicksort
-//1. Neither 14 or 17 could have been the pivot--According to the 
+//1. Neither 14 or 17 could have been the pivot--According to the
 //lecture, the last integer was chosen as the pivot.
 //2.
-
-
 
 // function bubbleSort(array) {
 //   let swaps = 0;
@@ -79,17 +74,16 @@ let callCount = {
 //   return array;
 // }
 
-
-
 function swap(array, i, j) {
   const tmp = array[i];
   array[i] = array[j];
   array[j] = tmp;
 }
 
-function partition(array, start, end) { 
+function partition(array, start, end, pivotAtStart) {
   let pivot = array[end - 1];
-  if (callCount.count === 1) pivot = array[start];
+  if (pivotAtStart) pivot = array[start];
+
   let j = start;
   for (let i = start; i < end - 1; i++) {
     if (array[i] <= pivot) {
@@ -97,28 +91,42 @@ function partition(array, start, end) {
       j++;
     }
   }
-  swap(array, end-1, j);
+
+  swap(array, end - 1, j);
 
   return j;
 }
 
-function quickSort(array, start = 0, end = array.length) {
+function quickSort(array, start = 0, end = array.length, pivotAtStart = false) {
   if (start >= end) {
     return array;
   }
-  const middle = partition(array, start, end);
-  array = quickSort(array, start, middle);
-  array = quickSort(array, middle + 1, end);
 
-  
+  const middle = partition(array, start, end, pivotAtStart);
+
   callCount.count++;
-  if (callCount.count == 1) callCount.secondPartition = array;
 
-  if (callCount.secondPartition) callCount.listResult = array;
+  // show the resulting list after the second partitioning according to the quicksort algorithm
+
+  // using the last item on the list as a pivot
+  if (callCount.count == 1 && !pivotAtStart) callCount.pivotAtEnd = [...array];
+
+  // using the first item on the list as a pivot
+  if (callCount.count == 1 && pivotAtStart) callCount.pivotAtStart = [...array];
+
+  array = quickSort(array, start, middle, pivotAtStart);
+  array = quickSort(array, middle + 1, end, pivotAtStart);
 
   return array;
 }
 
-quickSort([14, 17, 13, 15, 19, 10, 3, 16, 9, 12]);
-console.log(callCount.secondPartition);
-console.log(callCount.listResult);
+const qsArray = [14, 17, 13, 15, 19, 10, 3, 16, 9, 12];
+
+quickSort(qsArray);
+
+// reset the count
+callCount.count = 0;
+quickSort(qsArray, 0, qsArray.length, true);
+
+console.log(callCount.pivotAtStart);
+console.log(callCount.pivotAtEnd);
