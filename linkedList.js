@@ -6,13 +6,15 @@ class _Node {
 }
 
 class LinkedList {
-  constructor() {
-    this.head = null;
+  constructor(head) {
+    this.head = head || null;
   }
 
-  insertFirst = item => (this.head = new _Node(item, this.head));
+  insertFirst(item) {
+    return (this.head = new _Node(item, this.head));
+  }
 
-  insertLast = item => {
+  insertLast(item) {
     if (this.head === null) {
       this.insertFirst(item);
     } else {
@@ -22,9 +24,9 @@ class LinkedList {
       }
       currentNode.next = new _Node(item, null);
     }
-  };
+  }
 
-  insertBefore = (item, key) => {
+  insertBefore(item, key) {
     if (this.head === null) return null;
     if (this.head.value === key) this.insertFirst(item);
 
@@ -40,9 +42,9 @@ class LinkedList {
       current = current.next;
     }
     return null;
-  };
+  }
 
-  insertAfter = (item, key) => {
+  insertAfter(item, key) {
     if (this.head === null) return null;
 
     let current = this.head;
@@ -55,9 +57,13 @@ class LinkedList {
       current = current.next;
     }
     return null;
-  };
+  }
 
-  insertAt = (item, index) => {
+  mergeSort() {
+    return this;
+  }
+
+  insertAt(item, index) {
     if (index === 0) {
       this.insertFirst(item);
       return;
@@ -73,9 +79,9 @@ class LinkedList {
     }
 
     current.next = new _Node(item, current.next);
-  };
+  }
 
-  remove = item => {
+  remove(item) {
     if (!this.head) {
       return null;
     }
@@ -94,9 +100,9 @@ class LinkedList {
       return;
     }
     previousNode.next = currentNode.next;
-  };
+  }
 
-  find = item => {
+  find(item) {
     let currentNode = this.head;
 
     if (!this.head) {
@@ -111,7 +117,7 @@ class LinkedList {
       }
     }
     return currentNode;
-  };
+  }
 }
 
 module.exports = LinkedList;
