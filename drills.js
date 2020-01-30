@@ -1,6 +1,6 @@
-const LinkedList = require('./linkedList');
+const LinkedList = require("./linkedList");
 
-
+const { insertionSort } = require("./utils");
 
 let callCount = {
   count: 0,
@@ -56,7 +56,7 @@ const merge = (left, right, array) => {
 const mergeList = [21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40];
 
 mergeSort(mergeList);
-console.log(callCount);
+// console.log(callCount);
 
 //Quicksort
 //1. Neither 14 or 17 could have been the pivot--According to the
@@ -132,21 +132,81 @@ quickSort(qsArray);
 callCount.count = 0;
 quickSort(qsArray, 0, qsArray.length, true);
 
-console.log(callCount.pivotAtStart);
-console.log(callCount.pivotAtEnd);
+// console.log(callCount.pivotAtStart);
+// console.log(callCount.pivotAtEnd);
 
-let dataset = '89 30 25 32 72 70 51 42 25 24 53 55 78 50 13 40 48 32 26 2 14 33 45 72 56 44 21 88 27 68 15 62 93 98 73 28 16 46 87 28 65 38 67 16 85 63 23 69 64 91 9 70 81 27 97 82 6 88 3 7 46 13 11 64 76 31 26 38 28 13 17 69 90 1 6 7 64 43 9 73 80 98 46 27 22 87 49 83 6 39 42 51 54 84 34 53 78 40 14 5'.split(' ');
-
+let dataset = "89 30 25 32 72 70 51 42 25 24 53 55 78 50 13 40 48 32 26 2 14 33 45 72 56 44 21 88 27 68 15 62 93 98 73 28 16 46 87 28 65 38 67 16 85 63 23 69 64 91 9 70 81 27 97 82 6 88 3 7 46 13 11 64 76 31 26 38 28 13 17 69 90 1 6 7 64 43 9 73 80 98 46 27 22 87 49 83 6 39 42 51 54 84 34 53 78 40 14 5".split(
+  " "
+);
 
 function qSort(dataset) {
   return quickSort(dataset);
 }
-console.log(qSort(dataset));
+// console.log(qSort(dataset));
 
 function mSort(dataset) {
   return mergeSort(dataset);
-
 }
-console.log(mSort(dataset));
+// console.log(mSort(dataset));
 
+// 5. linked list sort
 
+const list = new LinkedList();
+
+list.insertFirst(1);
+list.insertFirst(3);
+list.insertFirst(2);
+list.insertFirst(4);
+
+// console.log(list.mergeSort());
+
+// 6. bucket sort
+
+const array = [0, 1, 3, 4, 6, 7, 2, 5, 10, 9];
+
+const bucketSort = (array, bucketSize = 5) => {
+  if (array.length === 0) {
+    return array;
+  }
+
+  // Declaring vars
+  let i,
+    minValue = array[0],
+    maxValue = array[0];
+
+  // Setting min and max values
+  array.forEach(c => {
+    if (c < minValue) {
+      minValue = c;
+    } else if (c > maxValue) {
+      maxValue = c;
+    }
+  });
+
+  // Initializing buckets
+  var bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;
+  var allBuckets = new Array(bucketCount);
+
+  for (i = 0; i < allBuckets.length; i++) {
+    allBuckets[i] = [];
+  }
+
+  // Pushing values to buckets
+  array.forEach(c => {
+    allBuckets[Math.floor((c - minValue) / bucketSize)].push(c);
+  });
+
+  // Sorting buckets
+  array.length = 0;
+
+  allBuckets.forEach(bucket => {
+    insertionSort(bucket);
+    bucket.forEach(element => {
+      array.push(element);
+    });
+  });
+
+  return array;
+};
+
+console.log(bucketSort(array));
