@@ -8,51 +8,51 @@ let callCount = {
   pivotAtEnd: null
 };
 
-// const mergeSort = arr => {
-//   if (arr.length <= 1) return arr;
+const mergeSort = arr => {
+  if (arr.length <= 1) return arr;
 
-//   callCount.count++;
-//   if (callCount.count == 3) callCount.three = arr;
+  callCount.count++;
+  if (callCount.count == 3) callCount.three = arr;
 
-//   if (callCount.count == 15) callCount.sixteen = arr;
+  if (callCount.count == 15) callCount.sixteen = arr;
 
-//   const mid = Math.floor(arr.length / 2);
-//   let left = arr.slice(0, mid);
-//   let right = arr.slice(mid, arr.length);
+  const mid = Math.floor(arr.length / 2);
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid, arr.length);
 
-//   if (callCount.count == 1) callCount.firstTwo = [left, right];
-//   if (callCount.count == 7) callCount.seventh = [left, right];
+  if (callCount.count == 1) callCount.firstTwo = [left, right];
+  if (callCount.count == 7) callCount.seventh = [left, right];
 
-//   left = mergeSort(left);
-//   right = mergeSort(right);
+  left = mergeSort(left);
+  right = mergeSort(right);
 
-//   return merge(left, right, arr);
-// };
+  return merge(left, right, arr);
+};
 
-// const merge = (left, right, array) => {
-//   let leftIndex = 0;
-//   let rightIndex = 0;
-//   let outputIndex = 0;
-//   while (leftIndex < left.length && rightIndex < right.length) {
-//     if (left[leftIndex] < right[rightIndex])
-//       array[outputIndex++] = left[leftIndex++];
-//     else array[outputIndex++] = right[rightIndex++];
-//   }
+const merge = (left, right, array) => {
+  let leftIndex = 0;
+  let rightIndex = 0;
+  let outputIndex = 0;
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex])
+      array[outputIndex++] = left[leftIndex++];
+    else array[outputIndex++] = right[rightIndex++];
+  }
 
-//   for (let i = leftIndex; i < left.length; i++) array[outputIndex++] = left[i];
+  for (let i = leftIndex; i < left.length; i++) array[outputIndex++] = left[i];
 
-//   for (let i = rightIndex; i < right.length; i++)
-//     array[outputIndex++] = right[i];
+  for (let i = rightIndex; i < right.length; i++)
+    array[outputIndex++] = right[i];
 
-//   return array;
-// };
+  return array;
+};
 
-// // 1. merge sort
+// 1. merge sort
 
-// const mergeList = [21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40];
+const mergeList = [21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40];
 
-// mergeSort(mergeList);
-// console.log(callCount);
+mergeSort(mergeList);
+console.log(callCount);
 
 //Quicksort
 //1. Neither 14 or 17 could have been the pivot--According to the
@@ -130,3 +130,17 @@ quickSort(qsArray, 0, qsArray.length, true);
 
 console.log(callCount.pivotAtStart);
 console.log(callCount.pivotAtEnd);
+
+let dataset = '89 30 25 32 72 70 51 42 25 24 53 55 78 50 13 40 48 32 26 2 14 33 45 72 56 44 21 88 27 68 15 62 93 98 73 28 16 46 87 28 65 38 67 16 85 63 23 69 64 91 9 70 81 27 97 82 6 88 3 7 46 13 11 64 76 31 26 38 28 13 17 69 90 1 6 7 64 43 9 73 80 98 46 27 22 87 49 83 6 39 42 51 54 84 34 53 78 40 14 5'.split(' ');
+
+
+function qSort(dataset) {
+  return quickSort(dataset);
+}
+console.log(qSort(dataset));
+
+function mSort(dataset) {
+  return mergeSort(dataset);
+
+}
+console.log(mSort(dataset));
